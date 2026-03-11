@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hugo René Rivas Sarabia — Ingeniero en Robótica Industrial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0a0f1e;
+      --navy2: #111827;
+      --steel: #1e293b;
+      --cyan: #00d4ff;
+      --white: #f0f4f8;
+      --muted: #8899aa;
+      --accent: #ff6b35;
+      --line: rgba(0,212,255,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+    .hero-bg-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.08;
+      filter: saturate(0) contrast(1.2);
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--cyan);
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--cyan);
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      background: var(--cyan);
+      color: var(--navy);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .btn-primary:hover { background: #00efff; transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .hero-deco {
+      position: absolute;
+      right: 4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 340px; height: 340px;
+      opacity: 0;
+      animation: fadeIn 1.2s 1s forwards;
+    }
+    .hero-deco svg { width: 100%; height: 100%; animation: rotateSlow 20s linear infinite; }
+    .stats-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--steel);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: center;
+    }
+    .stat-item {
+      flex: 1;
+      max-width: 220px;
+      text-align: center;
+      padding: 0 2rem;
+      border-right: 1px solid var(--line);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--cyan);
+      display: block;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 4rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 3.5rem;
+    }
+    .section-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .section-line { flex: 1; height: 1px; background: var(--line); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #c0cdd8;
+      margin-bottom: 1.2rem;
+    }
+    .about-highlights { display: flex; flex-direction: column; gap: 1.2rem; }
+    .highlight-card {
+      background: var(--steel);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--cyan);
+      padding: 1.2rem 1.5rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .highlight-card:hover { transform: translateX(6px); border-left-color: var(--accent); }
+    .highlight-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.3rem;
+    }
+    .highlight-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+
+    /* IMAGE SHOWCASE */
+    .img-showcase {
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+      overflow: hidden;
+      background: var(--steel);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 4rem;
+    }
+    .img-showcase-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .img-showcase-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .img-showcase-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .img-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 280px;
+      gap: 1rem;
+    }
+    .img-grid-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .img-grid-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.3) brightness(0.7);
+      transition: filter 0.4s, transform 0.4s;
+    }
+    .img-grid-item:hover img {
+      filter: saturate(0.7) brightness(0.9);
+      transform: scale(1.04);
+    }
+    .img-grid-item .img-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.8rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .img-grid-item:hover .img-caption { opacity: 1; }
+    .img-grid-item:first-child { grid-row: 1 / 2; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-category {
+      background: var(--steel);
+      border: 1px solid var(--line);
+      padding: 2rem;
+      transition: border-color 0.3s;
+    }
+    .skill-category:hover { border-color: var(--cyan); }
+    .skill-category h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .skill-tag {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      margin: 0.3rem;
+      background: rgba(0,212,255,0.07);
+      border: 1px solid rgba(0,212,255,0.2);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: #b0c4d4;
+      transition: background 0.2s, color 0.2s;
+    }
+    .skill-tag:hover { background: rgba(0,212,255,0.15); color: var(--cyan); }
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-dot {
+      position: absolute;
+      left: -2.8rem;
+      top: 6px;
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border: 2px solid var(--navy);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    .timeline-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-company { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .timeline-desc { font-size: 0.9rem; line-height: 1.7; color: #a0b0c0; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--steel);
+      border: 1px solid var(--line);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .project-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--line);
+      filter: saturate(0.2) brightness(0.65);
+      transition: filter 0.4s;
+    }
+    .project-card:hover .project-card-img {
+      filter: saturate(0.5) brightness(0.8);
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--cyan); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .project-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(255,107,53,0.1);
+      border: 1px solid rgba(255,107,53,0.3);
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    #contact {
+      background: var(--steel);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      max-width: 100%;
+      padding: 6rem 4rem;
+    }
+    #contact .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .contact-info h2 span { color: var(--cyan); }
+    .contact-info p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--cyan); }
+    .contact-link .link-icon {
+      width: 38px; height: 38px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group textarea {
+      background: var(--navy);
+      border: 1px solid var(--line);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--cyan); }
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 2rem 4rem; }
+      .hero-deco { display: none; }
+      section { padding: 4rem 2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .stats-bar { padding: 1.5rem 2rem; flex-wrap: wrap; }
+      .stat-item { border-right: none; padding: 0.5rem 1rem; }
+      #contact { padding: 4rem 2rem; }
+      #contact .inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .img-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .img-grid-item { height: 200px; }
+      .img-showcase { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">H.R.R.S</div>
+  <ul class="nav-links">
+    <li><a href="#about">Perfil</a></li>
+    <li><a href="#skills">Habilidades</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg-img">
+    <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1600&auto=format&fit=crop&q=80" alt="Robot Industrial"/>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag">Ingeniero en Robótica Industrial</div>
+    <h1>Hugo René<br/><span>Rivas</span> Sarabia</h1>
+    <p class="hero-subtitle">Especialista en automatización, sistemas robóticos y control industrial. Diseñando el futuro de la manufactura inteligente.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">Ver Proyectos →</a>
+      <a href="#contact" class="btn-outline">Contacto</a>
+    </div>
+  </div>
+  <div class="hero-deco">
+    <svg viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="170" r="160" stroke="rgba(0,212,255,0.12)" stroke-width="1"/>
+      <circle cx="170" cy="170" r="120" stroke="rgba(0,212,255,0.08)" stroke-width="1" stroke-dasharray="6 10"/>
+      <circle cx="170" cy="170" r="80" stroke="rgba(0,212,255,0.18)" stroke-width="1"/>
+      <polygon points="170,40 200,130 290,130 220,185 245,275 170,220 95,275 120,185 50,130 140,130"
+               stroke="rgba(0,212,255,0.3)" stroke-width="1" fill="none"/>
+      <circle cx="170" cy="170" r="10" fill="rgba(0,212,255,0.5)"/>
+      <circle cx="170" cy="10"  r="5"  fill="var(--cyan)"/>
+      <circle cx="330" cy="170" r="5"  fill="var(--accent)"/>
+      <circle cx="170" cy="330" r="5"  fill="var(--cyan)"/>
+      <circle cx="10"  cy="170" r="5"  fill="var(--accent)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">5+</span>
+    <span class="stat-label">Años de Experiencia</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">20+</span>
+    <span class="stat-label">Proyectos Completados</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">10+</span>
+    <span class="stat-label">Tecnologías Dominadas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Compromiso</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Perfil Profesional</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Soy <strong>Hugo René Rivas Sarabia</strong>, Ingeniero en Robótica Industrial con pasión por el diseño y la implementación de sistemas automatizados de alto rendimiento.</p>
+      <p>Mi enfoque combina el rigor de la ingeniería de control con la innovación tecnológica, desarrollando soluciones robóticas que optimizan procesos productivos en entornos industriales exigentes.</p>
+      <p>Me especializo en la integración de robots industriales, programación de PLCs y el desarrollo de sistemas de visión artificial para garantizar precisión y eficiencia en líneas de manufactura.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-card">
+        <h4>🤖 Robótica Industrial</h4>
+        <p>Programación y configuración de brazos robóticos KUKA, FANUC y ABB para aplicaciones de manufactura.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>⚙️ Automatización</h4>
+        <p>Diseño e implementación de sistemas de control PLC con Siemens y Allen-Bradley para procesos industriales.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>👁️ Visión Artificial</h4>
+        <p>Desarrollo de sistemas de inspección visual usando OpenCV y cámaras industriales de alta precisión.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>🏭 Industria 4.0</h4>
+        <p>Integración de IoT industrial, gemelos digitales y análisis de datos para manufactura inteligente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE SHOWCASE -->
+<div class="img-showcase">
+  <div class="img-showcase-inner">
+    <div class="img-showcase-label">Áreas de Especialización</div>
+    <div class="img-grid">
+      <div class="img-grid-item">
+        <img src="https://images.unsplash.com/photo-1563209259-2ea98b0b9d0e?w=900&auto=format&fit=crop&q=80" alt="Robótica Industrial"/>
+        <div class="img-caption">Robótica Industrial & Automatización</div>
+      </div>
+      <div class="img-grid-item">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80" alt="Control PLC"/>
+        <div class="img-caption">Sistemas de Control PLC</div>
+      </div>
+      <div class="img-grid-item">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80" alt="Industria 4.0"/>
+        <div class="img-caption">Industria 4.0 & IoT Industrial</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Habilidades Técnicas</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category">
+      <h3><span>🤖</span> Robótica</h3>
+      <span class="skill-tag">KUKA</span><span class="skill-tag">FANUC</span><span class="skill-tag">ABB IRB</span><span class="skill-tag">ROS / ROS2</span><span class="skill-tag">Universal Robots</span><span class="skill-tag">Yaskawa</span>
+    </div>
+    <div class="skill-category">
+      <h3><span>💻</span> Programación</h3>
+      <span class="skill-tag">Python</span><span class="skill-tag">C / C++</span><span class="skill-tag">MATLAB</span><span class="skill-tag">Ladder Logic</span><span class="skill-tag">Structured Text</span><span class="skill-tag">G-Code</span>
+    </div>
+    <div class="skill-category">
+      <h3><span>⚡</span> Automatización</h3>
+      <span class="skill-tag">Siemens TIA Portal</span><span class="skill-tag">Allen-Bradley</span><span class="skill-tag">LabVIEW</span><span class="skill-tag">SCADA</span><span class="skill-tag">HMI</span><span class="skill-tag">Modbus / Profibus</span>
+    </div>
+    <div class="skill-category">
+      <h3><span>🔬</span> Diseño & Simulación</h3>
+      <span class="skill-tag">SolidWorks</span><span class="skill-tag">AutoCAD</span><span class="skill-tag">RobotStudio</span><span class="skill-tag">Gazebo</span><span class="skill-tag">CATIA</span><span class="skill-tag">Ansys</span>
+    </div>
+    <div class="skill-category">
+      <h3><span>👁️</span> Visión Artificial</h3>
+      <span class="skill-tag">OpenCV</span><span class="skill-tag">Cognex</span><span class="skill-tag">Keyence</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Deep Learning</span><span class="skill-tag">HALCON</span>
+    </div>
+    <div class="skill-category">
+      <h3><span>🌐</span> Industria 4.0</h3>
+      <span class="skill-tag">OPC-UA</span><span class="skill-tag">MQTT</span><span class="skill-tag">AWS IoT</span><span class="skill-tag">Digital Twin</span><span class="skill-tag">InfluxDB</span><span class="skill-tag">Grafana</span>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experiencia</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2023 — Presente</div>
+      <div class="timeline-role">Ingeniero Senior en Automatización</div>
+      <div class="timeline-company">Empresa de Manufactura Automotriz</div>
+      <div class="timeline-desc">Liderazgo en la integración de celdas robóticas para soldadura y ensamblaje. Reducción del 30% en tiempos de ciclo mediante optimización de trayectorias y programación avanzada de robots KUKA y FANUC.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2021 — 2023</div>
+      <div class="timeline-role">Ingeniero en Robótica y Control</div>
+      <div class="timeline-company">Planta Industrial de Electrodomésticos</div>
+      <div class="timeline-desc">Diseño e implementación de sistemas de control PLC con Siemens S7-1500. Desarrollo de sistemas de visión artificial para control de calidad, logrando una precisión del 99.8% en detección de defectos.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2020 — 2021</div>
+      <div class="timeline-role">Técnico en Automatización Industrial</div>
+      <div class="timeline-company">Empresa de Alimentos y Bebidas</div>
+      <div class="timeline-desc">Mantenimiento y programación de líneas automatizadas de empaque. Implementación de mejoras en HMI y SCADA para monitoreo en tiempo real de parámetros de producción.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2018 — 2020</div>
+      <div class="timeline-role">Ingeniería en Robótica Industrial — Titulación</div>
+      <div class="timeline-company">Universidad</div>
+      <div class="timeline-desc">Formación integral en mecatrónica, control automático, robótica y programación de sistemas embebidos. Tesis: Robot colaborativo para asistencia en líneas de manufactura flexible.</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Proyectos Destacados</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1563209259-2ea98b0b9d0e?w=600&auto=format&fit=crop&q=80" alt="Celda Robótica de Soldadura"/>
+      <div class="project-title">Celda Robótica de Soldadura Automotriz</div>
+      <div class="project-desc">Integración de 4 robots KUKA KR 60 para soldadura MIG automatizada en chasis automotrices con posicionamiento adaptativo a ±0.1 mm.</div>
+      <div class="project-tags"><span class="project-tag">KUKA</span><span class="project-tag">Visión Artificial</span><span class="project-tag">PLC Siemens</span></div>
+    </div>
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80" alt="Inspección Visual IA"/>
+      <div class="project-title">Sistema de Inspección Visual IA</div>
+      <div class="project-desc">Plataforma de control de calidad basada en deep learning para detección de defectos superficiales con tasa de falsos positivos inferior al 0.2%.</div>
+      <div class="project-tags"><span class="project-tag">TensorFlow</span><span class="project-tag">OpenCV</span><span class="project-tag">Python</span></div>
+    </div>
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=600&auto=format&fit=crop&q=80" alt="Gemelo Digital"/>
+      <div class="project-title">Gemelo Digital de Planta Productiva</div>
+      <div class="project-desc">Modelo digital 3D sincronizado en tiempo real con la planta física para simulación predictiva de mantenimiento y optimización de flujos.</div>
+      <div class="project-tags"><span class="project-tag">IoT Industrial</span><span class="project-tag">Digital Twin</span><span class="project-tag">AWS</span></div>
+    </div>
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&auto=format&fit=crop&q=80" alt="Robot Colaborativo"/>
+      <div class="project-title">Robot Colaborativo de Ensamblaje</div>
+      <div class="project-desc">Implementación de cobots UR10e para trabajo colaborativo junto a operadores. Sensores de fuerza/torque para manipulación de piezas delicadas.</div>
+      <div class="project-tags"><span class="project-tag">Universal Robots</span><span class="project-tag">ROS2</span><span class="project-tag">Cobótica</span></div>
+    </div>
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&auto=format&fit=crop&q=80" alt="Dashboard OEE"/>
+      <div class="project-title">Dashboard OEE en Tiempo Real</div>
+      <div class="project-desc">Sistema de monitoreo de eficiencia global de equipos con alertas inteligentes, historial de fallas y dashboards interactivos para gerencia.</div>
+      <div class="project-tags"><span class="project-tag">SCADA</span><span class="project-tag">InfluxDB</span><span class="project-tag">Grafana</span></div>
+    </div>
+    <div class="project-card">
+      <img class="project-card-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80" alt="AGV Logística"/>
+      <div class="project-title">AGV para Logística Interna</div>
+      <div class="project-desc">Diseño de vehículos guiados automáticamente para transporte de materiales con navegación por láser SLAM y evitación dinámica de obstáculos.</div>
+      <div class="project-tags"><span class="project-tag">ROS</span><span class="project-tag">SLAM</span><span class="project-tag">C++</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="inner">
+    <div class="contact-info">
+      <h2>¿Listo para <span>innovar</span><br/>juntos?</h2>
+      <p>Estoy disponible para proyectos, consultoría técnica y oportunidades de colaboración en robótica e industria 4.0.</p>
+      <div class="contact-links">
+        <a href="mailto:hugo.rivas@email.com" class="contact-link">
+          <span class="link-icon">✉️</span>hugo.rivas@email.com
+        </a>
+        <a href="tel:+521234567890" class="contact-link">
+          <span class="link-icon">📱</span>+52 (123) 456-7890
+        </a>
+        <a href="#" class="contact-link">
+          <span class="link-icon">💼</span>linkedin.com/in/hugorivas
+        </a>
+        <a href="#" class="contact-link">
+          <span class="link-icon">📍</span>México
+        </a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre"/>
+        </div>
+        <div class="form-group">
+          <label>Empresa</label>
+          <input type="text" placeholder="Tu empresa"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" placeholder="tu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Mensaje</label>
+        <textarea rows="5" placeholder="Cuéntame sobre tu proyecto..."></textarea>
+      </div>
+      <button class="btn-primary" style="align-self:flex-start; border:none;" onclick="alert('¡Mensaje enviado! Hugo te contactará pronto.')">Enviar Mensaje →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Hugo René Rivas Sarabia — Ingeniero en Robótica Industrial</p>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 150);
+    });
+  }, { threshold: 0.15 });
+  items.forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id'); });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : ''; });
+  });
+</script>
+</body>
+</html>
